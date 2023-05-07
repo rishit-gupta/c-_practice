@@ -1,0 +1,37 @@
+You are given a string str of length n. You want to choose a non-zero integer k (k<=n), such that you can perform the following operation:
+Take the prefix of the string of length k and append the reverse of it to itself.
+Your task is to find the lexicographically smallest string you can get.
+
+Example 1:
+
+Input:
+str = "bvdfndkn"
+Output:
+bb
+Explanation:
+If we choose k=1, prefix of length k will be "b", reverse of
+this prefix will be "b" itself, when we append both we get "bb",
+"bb" is the lexicographically smallest string you can get.
+If you choose k>1, the resulting string will not be 
+lexicographically smaller than "bb".
+
+class Solution{
+public:
+     string stringMirror(string str){
+        // Code here
+        string s;
+        s=str[0];
+        for(int i=1;i<str.length();i++){
+            if(str[i-1]>=str[i]&& str[0]!=str[1])
+            s=s+str[i];
+            else
+            break;
+            
+        }
+        string st=s;
+        for(int j=s.length()-1;j<s.length();j--){
+            s=s+st[j];
+        }
+    return s;
+    }
+};
