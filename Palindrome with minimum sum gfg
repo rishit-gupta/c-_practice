@@ -1,0 +1,56 @@
+Given a string, S.The string can contain small case English letters or '?'. You can replace '?' with any small English letter. Now if it is possible to make the string S a palindrome after replacing all '?' then find the palindromic string with a minimum ascii sum of the absolute difference of adjacent characters. Otherwise, return -1.
+
+Example 1:
+
+Input: S = a???c??c????
+Output: 4
+Explanation:
+We can see that we can make the string
+palindrome. Now to get minimum ascii sum we should
+replace all the '?' between 'a' and 'c' with
+'b' and all the '?' between two 'c' with 'c'.
+So after replacing all the '?' the string: 
+abbbccccbbba.
+The sum of differences of adjacent characters is 4.   
+
+
+
+class Solution {
+  public:
+    int minimumSum(string s) {
+        // code here
+        for(int i=0,j=s.length()-1;i<j;i++,j--)
+        {
+            if(s[i]==s[j]||s[i]=='?'||s[j]=='?')
+            {
+                if(s[i]!='?')
+                s[j]=s[i];
+                else if(s[j]!='?')
+                s[i]=s[j];
+                else
+                continue;
+            }
+            else
+            return -1;
+        }
+        int sum=0;
+        for(int i=0;i<(s.length()/2);)
+        {
+            char c= s[i];
+            if(c=='?')
+            {
+                while(s[i]=='?' && i<(s.length()/2))
+                i++;
+            }
+            else
+            {
+                i++;
+                while(s[i]=='?' && i<(s.length()/2))
+                i++;
+                if(s[i]!='?')
+                sum=sum + abs(c-s[i]);
+            }
+        }
+        return sum*2;
+    }
+};
