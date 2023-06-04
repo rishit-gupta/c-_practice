@@ -1,0 +1,40 @@
+Given a mathematical equation that contains only numbers and +, -, *, /. Print the equation in reverse, such that the equation is reversed, but the numbers remain the same.
+It is guaranteed that the given equation is valid, and there are no leading zeros.
+
+Example 1:
+
+Input:
+S = "20-3+5*2"
+Output: 2*5+3-20
+Explanation: The equation is reversed with
+numbers remaining the same.
+
+
+
+
+
+class Solution
+{
+  public:
+    string ans="";
+    stack<string> st;
+    string reverseEqn (string s)
+        {
+            //code here.
+            int start = 0;
+            for(int i=0; i<s.length(); i++){
+                if(!isdigit(s[i])){
+                    string sub_str = s.substr(start, i-start);
+                    st.push(sub_str);
+                    st.push(string(1, s[i]));
+                    start = i+1;
+                }
+            }
+            st.push(s.substr(start, s.length()-start));
+            while(!st.empty()){
+                ans += st.top();
+                st.pop();
+            }
+            return ans;
+        }
+};
