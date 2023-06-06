@@ -1,0 +1,80 @@
+There is BST given with the root node with the key part as an integer only. You need to find the in-order successor and predecessor of a given key. If either predecessor or successor is not found, then set it to NULL.
+
+Note:- In an inorder traversal the number just smaller than the target is the predecessor and the number just greater than the target is the successor. 
+
+Example 1:
+
+Input:
+        10
+      /   \
+     2    11
+   /  \ 
+  1    5
+      /  \
+     3    6
+      \
+       4
+key = 8
+Output: 
+6 10
+Explanation: 
+In the given BST the inorder predecessor of 8 is 6 and inorder successor of 8 is 10.
+
+class Solution
+{
+    public:
+    void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+    {
+        // Your code goes here
+       if(root==NULL){
+           return  ; 
+       }    
+       
+       bool flag = false ; 
+       while(flag==false){
+           if(root->key == key){
+               flag = true ; 
+           }
+           
+           if(root->key < key and root->right!=NULL){
+               pre  = root ; 
+               root = root->right ; 
+           }
+           if(root->key < key and root->right==NULL){
+               pre = root; 
+               flag = true ; 
+           }
+           
+           if(root->key > key and root->left!=NULL){
+               suc= root ; 
+               root  = root->left ; 
+           }
+           
+           if(root->key > key and root->left==NULL){
+               suc = root ; 
+               flag =  true ; 
+           }
+           
+       }
+       
+       if(root->key == key){
+           if(root->left){
+               pre = root->left ; 
+               
+               
+               while(pre->right!=NULL){
+                   pre = pre->right ; 
+               }
+           }
+           if(root->right){
+               suc = root->right ;
+               
+               while(suc->left!=NULL){
+                   suc = suc->left ; 
+               }
+           }
+       }
+        
+    
+    }
+};
