@@ -1,0 +1,53 @@
+Given two integers N (1<=N<=9) and K. Find the kth permutation sequence of first N natural numbers. Return the answer in string format.
+
+Example 1:
+
+Input: N = 4, K = 3
+Output: 1324
+Explanation: 
+Permutations of first 4 natural numbers:
+1234,1243,1324,1342,1423,1432.....
+So the 3rd permutation is 1324. 
+
+
+
+
+
+class Solution
+{
+public:
+    string kthPermutation(int n, int k)
+    {
+        // code here
+        vector<int>fact(n);
+        fact[0] = 1;
+        for(int i = 1; i < n; i++){
+            fact[i] = fact[i-1] * i;
+        }
+        string ans;
+        int i = n-1;
+        vector<char>vals;
+        for(int j = 0; j < n; j++){
+            vals.push_back(char('0'+j+1));
+        }
+        while(i >= 0){
+            int div = ceil((double)k / fact[i]);
+            k = k - (div-1)*fact[i];
+            div %= n;
+            div--;
+            div += (i+1);
+            div %= (i+1);
+            ans.push_back(vals[div]);
+            vals[div] = -1;
+            vector<char>temp;
+            for(int j = 0; j <= i; j++){
+                if(vals[j] != -1){
+                    temp.push_back(vals[j]);
+                }
+            }
+            vals = temp;
+            i--;
+        }
+        return ans;
+    }
+};
