@@ -1,0 +1,35 @@
+Given a rod of length N inches and an array of prices, price[]. price[i] denotes the value of a piece of length i. Determine the maximum value obtainable by cutting up the rod and selling the pieces.
+
+Note: Consider 1-based indexing.
+
+Example 1:
+
+Input:
+N = 8
+Price[] = {1, 5, 8, 9, 10, 17, 17, 20}
+Output:
+22
+Explanation:
+The maximum obtainable value is 22 by 
+cutting in two pieces of lengths 2 and 
+6, i.e., 5+17=22.
+
+class Solution{
+    public:
+    int solve(int n ,int need,int sum,int price[],vector<int>&dp){
+        if(need==0) 
+        return sum;
+        if(dp[need-1]!= -1) return sum+dp[need-1];
+        int maxi=0;
+        for(int j=1;j<=need;j++){
+            maxi= max(maxi,solve(n,need-j,sum+price[j-1],price,dp));
+        }
+        dp[need-1]=maxi-sum;
+        return maxi;
+    }
+    int cutRod(int price[], int n) {
+        vector<int>dp(n,-1);
+        int x =solve(n,n,0,price,dp);
+        return x;
+    }
+};
